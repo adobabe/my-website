@@ -14,7 +14,7 @@ import {
   getMetadata,
   loadScript,
   toCamelCase,
-  toClassName
+  toClassName,
 } from './aem.js';
 
 const AUDIENCES = {
