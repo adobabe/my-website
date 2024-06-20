@@ -21,22 +21,21 @@ const detectBrowser = () => {
   const browserInfo = window.navigator.userAgent;
   if (/Chrome\/\d+/.test(browserInfo)) {
     if (!/Chromium\/\d+|Edg\/\d+/.test(browserInfo)) {
-        console.log("chrome")
-        return "chrome";
+      return 'chrome';
     }
   } else if (/Safari\/\d+/.test(browserInfo)) {
-      if (!/Chrome\/\d+|Chromium\/\d+/.test(browserInfo)) {
-          return "safari";
-      }
+    if (!/Chrome\/\d+|Chromium\/\d+/.test(browserInfo)) {
+      return 'safari';
+    }
   }
-  return None;
-}
+  return null;
+};
 
 const AUDIENCES = {
   mobile: () => window.innerWidth < 600,
   desktop: () => window.innerWidth >= 600,
-  // chrome: () => detectBrowser() === "chrome",
-  // safari: () => detectBrowser() === "safari",
+  chrome: () => detectBrowser() === 'chrome',
+  safari: () => detectBrowser() === 'safari',
 };
 
 /**
@@ -132,8 +131,8 @@ async function loadEager(doc) {
     || Object.keys(getAllMetadata('campaign')).length
     || Object.keys(getAllMetadata('audience')).length) {
     // eslint-disable-next-line import/no-relative-packages
-    const { loadEager } = await import('../plugins/experimentation/src/index.js');
-    await loadEager(document, { audiences: AUDIENCES }, pluginContext);
+    const { loadEager: runEager } = await import('../plugins/experimentation/src/index.js');
+    await runEager(document, { audiences: AUDIENCES }, pluginContext);
   }
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
